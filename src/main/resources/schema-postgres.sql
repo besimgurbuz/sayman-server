@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(id BIGINT PRIMARY KEY, username VARCHAR(100), email VARCHAR(255), created_at DATE, password VARCHAR(200));
+
+CREATE SEQUENCE IF NOT EXISTS hibernate_sequence START 1;
