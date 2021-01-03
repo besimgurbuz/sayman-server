@@ -1,6 +1,6 @@
-package com.sayman.server.authentication.repository;
+package com.sayman.server.auth.repository;
 
-import com.sayman.server.authentication.model.User;
+import com.sayman.server.auth.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
