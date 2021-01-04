@@ -1,5 +1,6 @@
 package com.sayman.server.auth.controller;
 
+import com.sayman.server.auth.model.UserDto;
 import com.sayman.server.auth.model.User;
 import com.sayman.server.auth.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping(value = "/register")
-    public User createNewUser(@RequestBody User user) {
-         return authenticationService.createNewUser(user);
+    public UserDto createNewUser(@RequestBody User user) {
+         return authenticationService.createNewUser(user).convertToUserDto();
     }
 
     @GetMapping(value = "/calender")

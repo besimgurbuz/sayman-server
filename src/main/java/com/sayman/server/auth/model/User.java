@@ -30,15 +30,24 @@ public class User {
 
     private String password;
 
-    @Column(name = "account_non_expired", columnDefinition = "boolean default true")
-    private boolean isAccountNonExpired;
+    @Column(name = "account_non_expired")
+    private boolean isAccountNonExpired = true;
 
-    @Column(name = "account_non_locked", columnDefinition = "boolean default true")
-    private boolean isAccountNonLocked;
+    @Column(name = "account_non_locked")
+    private boolean isAccountNonLocked = true;
 
-    @Column(name = "credentials_non_expired", columnDefinition = "boolean default true")
-    private boolean isCredentialsNonExpired;
+    @Column(name = "credentials_non_expired")
+    private boolean isCredentialsNonExpired = true;
 
-    @Column(name = "enabled", columnDefinition = "boolean default true")
-    private boolean isEnabled;
+    @Column(name = "enabled")
+    private boolean isEnabled = true;
+
+    public UserDto convertToUserDto() {
+        return UserDto.builder()
+                .username(username)
+                .email(email)
+                .role(role)
+                .createdAt(createdAt)
+                .build();
+    }
 }
