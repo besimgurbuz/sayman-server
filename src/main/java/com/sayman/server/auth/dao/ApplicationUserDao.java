@@ -1,6 +1,6 @@
 package com.sayman.server.auth.dao;
 
-import com.sayman.server.auth.ApplicationUser;
+import com.sayman.server.auth.model.ApplicationUser;
 
 import java.util.Optional;
 

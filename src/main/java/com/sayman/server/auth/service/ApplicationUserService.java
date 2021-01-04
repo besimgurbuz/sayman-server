@@ -1,4 +1,4 @@
-package com.sayman.server.auth;
+package com.sayman.server.auth.service;
 
 import com.sayman.server.auth.dao.ApplicationUserDao;
 import org.springframework.beans.factory.annotation.Autowired;

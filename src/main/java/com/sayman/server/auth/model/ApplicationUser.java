@@ -1,4 +1,4 @@
-package com.sayman.server.auth;
+package com.sayman.server.auth.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

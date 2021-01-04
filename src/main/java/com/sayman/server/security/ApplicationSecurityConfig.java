@@ -1,6 +1,6 @@
 package com.sayman.server.security;
 
-import com.sayman.server.auth.ApplicationUserService;
+import com.sayman.server.auth.service.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

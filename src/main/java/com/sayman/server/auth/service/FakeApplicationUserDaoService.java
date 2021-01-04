@@ -1,6 +1,7 @@
-package com.sayman.server.auth;
+package com.sayman.server.auth.service;
 
 import com.google.common.collect.Lists;
+import com.sayman.server.auth.model.ApplicationUser;
 import com.sayman.server.auth.dao.ApplicationUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 import static com.sayman.server.security.ApplicationUserRole.*;
 
-@Repository("fake")
+@Repository
 public class FakeApplicationUserDaoService implements ApplicationUserDao {
 
     private final PasswordEncoder passwordEncoder;
