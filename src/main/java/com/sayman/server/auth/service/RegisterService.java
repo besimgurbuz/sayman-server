@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class AuthenticationService {
+public class RegisterService {
     @Autowired
     private UserRepository userRepository;
 
@@ -15,6 +17,12 @@ public class AuthenticationService {
     private PasswordEncoder passwordEncoder;
 
     public User createNewUser(User newUser) {
+        Optional<User> foundUser = userRepository.findByUsername(newUser.getUsername());
+
+        foundUser.ifPresent((found) -> {
+            throw new UnsupportedOperationException(String.format("A user with %s username already exists", found.getUsername()));
+        });
+
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }

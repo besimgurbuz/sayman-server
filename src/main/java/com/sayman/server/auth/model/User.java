@@ -1,16 +1,18 @@
 package com.sayman.server.auth.model;
 
 import com.sayman.server.security.ApplicationUserRole;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User {
 
