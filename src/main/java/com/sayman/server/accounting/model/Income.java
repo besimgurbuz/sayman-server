@@ -6,9 +6,9 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Income")
+@Table(name = "incomes")
 public class Income extends AccountAction {
 }
