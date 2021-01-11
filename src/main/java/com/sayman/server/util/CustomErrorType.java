@@ -1,13 +1,13 @@
 package com.sayman.server.util;
 
 public class CustomErrorType {
-    private String errorMessage;
+    private final String error;
 
     public CustomErrorType(String errorMessage) {
-        this.errorMessage = errorMessage;
+        this.error = errorMessage;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getError() {
+        return error;
     }
 }

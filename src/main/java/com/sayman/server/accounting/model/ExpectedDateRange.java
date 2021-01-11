@@ -3,7 +3,7 @@ package com.sayman.server.accounting.model;
 import lombok.*;
 
 import javax.persistence.Embeddable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,7 +11,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Embeddable
 public class ExpectedDateRange {
-    private Date start;
-
-    private Date end;
+    private LocalDateTime start;
+    private LocalDateTime end;
 }
