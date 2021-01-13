@@ -1,8 +1,8 @@
 package com.sayman.server.security;
 
 public enum ApplicationUserPermission {
-    CALENDER_READ("calender:read"),
-    CALENDER_WRITE("calender:write"),
+    CALENDAR_READ("calendar:read"),
+    CALENDAR_WRITE("calendar:write"),
     SUBSCRIBER_READ("subscriber:read"),
     SUBSCRIBER_WRITE("subscriber:write");
 
