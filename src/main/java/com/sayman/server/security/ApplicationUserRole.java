@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import static com.sayman.server.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-    ADMIN(Set.of(CALENDER_READ, CALENDER_WRITE, SUBSCRIBER_READ, SUBSCRIBER_WRITE)),
-    MANAGER(Set.of(CALENDER_READ, CALENDER_WRITE)),
-    REVIEWER(Set.of(CALENDER_READ));
+    ADMIN(Set.of(CALENDAR_READ, CALENDAR_WRITE, SUBSCRIBER_READ, SUBSCRIBER_WRITE)),
+    MANAGER(Set.of(CALENDAR_READ, CALENDAR_WRITE)),
+    REVIEWER(Set.of(CALENDAR_READ));
 
     private final Set<ApplicationUserPermission> permissions;
 

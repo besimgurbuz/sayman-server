@@ -25,7 +25,7 @@ public class IncomeController {
     private IncomeService incomeService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('calender:read')")
+    @PreAuthorize("hasAuthority('calendar:read')")
     public ResponseEntity<List<IncomeResponse>> getIncomes(@AuthenticationPrincipal String activeUsername) {
         List<IncomeResponse> incomes = incomeService.getIncomes(activeUsername);
 
@@ -33,7 +33,7 @@ public class IncomeController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('calender:read')")
+    @PreAuthorize("hasAuthority('calendar:read')")
     public ResponseEntity<IncomeResponse> getIncomeById(@AuthenticationPrincipal String activeUsername,
                                                         @PathVariable Long id) {
         IncomeResponse incomeResponse = incomeService.getIncomeById(activeUsername, id);
@@ -42,7 +42,7 @@ public class IncomeController {
     }
 
     @PutMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('calender:write')")
+    @PreAuthorize("hasAuthority('calendar:write')")
     public ResponseEntity<?> updateIncomeById(@AuthenticationPrincipal String activeUsername,
                                               @RequestBody IncomeRequest incomeRequest,
                                               @PathVariable Long id) {
@@ -64,7 +64,7 @@ public class IncomeController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('calender:write')")
+    @PreAuthorize("hasAuthority('calendar:write')")
     public ResponseEntity<?> deleteIncomeById(@AuthenticationPrincipal String activeUsername,
                                               @PathVariable Long id) {
         try {
@@ -76,7 +76,7 @@ public class IncomeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('calender:write')")
+    @PreAuthorize("hasAuthority('calendar:write')")
     public ResponseEntity<?> createNewIncome(@AuthenticationPrincipal String activeUsername,
                                              @RequestBody IncomeRequest income) {
         try {
