@@ -64,14 +64,15 @@ public class IncomeService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        if (updateIncomeRequest.getExpectedDateStart() != null
-                && updateIncomeRequest.getExpectedDateEnd() != null
-                && accountItemDateRangeValidator(updateIncomeRequest.getExpectedDateStart(), updateIncomeRequest.getExpectedDateEnd())) {
+        Income mapped = incomeMapper.map(updateIncomeRequest, user)
+                .replaceNullPropertiesWith(incomeOptional.get());
+
+        if (mapped.getExpectedDateRange().getStart() != null
+                && mapped.getExpectedDateRange().getEnd() != null
+                && accountItemDateRangeValidator(mapped.getExpectedDateRange().getStart(), mapped.getExpectedDateRange().getEnd())) {
             throw new UnacceptableExpectedDateRangeException("Income start date cannot be later than end date.");
         }
 
-        Income mapped = incomeMapper.map(updateIncomeRequest, user);
-        mapped.setId(incomeId);
         incomeRepository.save(mapped);
     }
 
