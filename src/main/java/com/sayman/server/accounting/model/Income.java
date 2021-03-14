@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.lang.reflect.Field;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
