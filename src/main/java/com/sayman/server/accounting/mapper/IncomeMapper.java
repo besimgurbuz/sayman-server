@@ -25,11 +25,11 @@ public abstract class IncomeMapper {
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "username", source = "user.username")
-    @Mapping(target = "isHappened", source = "happened")
+    @Mapping(target = "isHappened", source = "isHappened")
     @Mapping(target = "happenedDate", source = "happenedDate")
     @Mapping(target = "expectedDateStart", source = "expectedDateRange.start")
     @Mapping(target = "expectedDateEnd", source = "expectedDateRange.end")
-    @Mapping(target = "isRegular", source = "regular")
+    @Mapping(target = "isRegular", source = "isRegular")
     @Mapping(target ="name", source = "name")
     @Mapping(target ="amount", source = "amount")
     @Mapping(target ="labelColor", source = "labelColor")
