@@ -34,11 +34,16 @@ public class IncomeController {
 
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('calendar:read')")
-    public ResponseEntity<IncomeResponse> getIncomeById(@AuthenticationPrincipal String activeUsername,
+    public ResponseEntity<?> getIncomeById(@AuthenticationPrincipal String activeUsername,
                                                         @PathVariable Long id) {
-        IncomeResponse incomeResponse = incomeService.getIncomeById(activeUsername, id);
+        try {
 
-        return new ResponseEntity<>(incomeResponse, HttpStatus.FOUND);
+            IncomeResponse incomeResponse = incomeService.getIncomeById(activeUsername, id);
+            return new ResponseEntity<>(incomeResponse, HttpStatus.FOUND);
+        } catch (NotFoundAccountItemException ex) {
+            return new ResponseEntity<CustomErrorType>( new CustomErrorType("Income not found with the id " + id),
+                    HttpStatus.valueOf(400));
+        }
     }
 
     @PutMapping(value = "/{id}")
