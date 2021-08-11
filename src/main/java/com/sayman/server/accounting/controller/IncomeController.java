@@ -14,8 +14,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/v1/incomes")
@@ -63,7 +65,7 @@ public class IncomeController {
                 status = HttpStatus.BAD_REQUEST;
             }
 
-            return new ResponseEntity<>(new CustomErrorType(e.getMessage()), status);
+            return new ResponseEntity<>(new CustomErrorType(e.getMessage()), Objects.requireNonNull(status));
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -92,5 +94,12 @@ public class IncomeController {
             return new ResponseEntity<>(new CustomErrorType(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<CustomErrorType> handleMethodArgumentMismatchExceptions(MethodArgumentTypeMismatchException exception) {
+        return new ResponseEntity<>(
+                new CustomErrorType(String.format("%s field cannot be %s", exception.getName(), exception.getValue())), HttpStatus.BAD_REQUEST);
     }
 }
