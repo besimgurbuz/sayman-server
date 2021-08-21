@@ -1,16 +1,19 @@
 package com.sayman.server.auth.controller;
 
-import com.sayman.server.auth.model.User;
 import com.sayman.server.auth.model.UserDto;
 import com.sayman.server.auth.service.RegisterService;
 import com.sayman.server.util.CustomErrorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/register")
@@ -20,14 +23,25 @@ public class RegisterController {
 
    @SuppressWarnings({"rawtypes"})
    @PostMapping
-   public ResponseEntity<?> registerNewUserIfNotExists(@RequestBody User user) {
+   public ResponseEntity<?> registerNewUserIfNotExists(@Valid @RequestBody UserDto userDto) {
       try {
-         User newUser = registerService.createNewUser(user);
+         UserDto newUser = registerService.createNewUser(userDto);
+         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
       } catch (UnsupportedOperationException e) {
          return new ResponseEntity<>(new CustomErrorType("A user with username "
-                 + user.getUsername() + " already exists"), HttpStatus.CONFLICT);
+                 + userDto.getUsername() + " already exists"), HttpStatus.CONFLICT);
       }
+   }
 
-      return new ResponseEntity<UserDto>(HttpStatus.CREATED);
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+   @ExceptionHandler(MethodArgumentNotValidException.class)
+   public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException exception) {
+      Map<String, String> errors = new HashMap<>();
+      for (ObjectError error : exception.getBindingResult().getAllErrors()) {
+         String fieldName = ((FieldError) error).getField();
+         String errorMessage = error.getDefaultMessage();
+         errors.put(fieldName, errorMessage);
+      }
+      return errors;
    }
 }

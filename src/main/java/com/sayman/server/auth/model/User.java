@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@Builder
 public class User implements Serializable {
 
     @Id
@@ -48,7 +49,6 @@ public class User implements Serializable {
                 .username(username)
                 .email(email)
                 .role(role)
-                .createdAt(createdAt)
                 .build();
     }
 }

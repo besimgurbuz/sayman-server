@@ -1,16 +1,57 @@
 package com.sayman.server.auth.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sayman.server.security.ApplicationUserRole;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Builder
 @Getter
 @Setter
 public class UserDto {
+    @NotNull(message = "Username cannot be empty")
+    @Pattern(regexp = "^(?=.{5,20}$)(?![.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![.])$", message = "Username must be between 5 and 20 characters long and can only contain letters, numbers, dots and underscores and cannot begin or end with a dot")
     private String username;
     private ApplicationUserRole role;
+
+    @NotNull(message = "Password cannot be empty")
+    @Min(value = 8, message = "Password must be at least 8 characters long")
+    private String password;
+
+    @NotNull(message = "Email cannot be empty")
+    @Email(message = "Email should be valid")
     private String email;
-    private LocalDateTime createdAt;
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    public User convertToUser() {
+        return User.builder()
+                .username(this.username)
+                .role(Optional.ofNullable(this.role).orElseGet(() -> ApplicationUserRole.REVIEWER))
+                .password(this.password)
+                .email(this.email)
+                .createdAt(LocalDateTime.now())
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
+                .build();
+    }
 }
