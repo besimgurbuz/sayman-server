@@ -19,7 +19,8 @@ import java.util.Optional;
 @Setter
 public class UserDto {
     @NotNull(message = "Username cannot be empty")
-    @Pattern(regexp = "^(?=.{5,20}$)(?![.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![.])$", message = "Username must be between 5 and 20 characters long and can only contain letters, numbers, dots and underscores and cannot begin or end with a dot")
+    @Pattern(regexp = "^(?=.{5,20}$)[a-zA-Z0-9_]+$", message = "Username must be between 5 and 20 characters " +
+            "long and can only contain letters, numbers and underscores.")
     private String username;
     private ApplicationUserRole role;
 

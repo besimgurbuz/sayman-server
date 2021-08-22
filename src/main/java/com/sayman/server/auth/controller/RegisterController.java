@@ -28,8 +28,7 @@ public class RegisterController {
          UserDto newUser = registerService.createNewUser(userDto);
          return new ResponseEntity<>(newUser, HttpStatus.CREATED);
       } catch (UnsupportedOperationException e) {
-         return new ResponseEntity<>(new CustomErrorType("A user with username "
-                 + userDto.getUsername() + " already exists"), HttpStatus.CONFLICT);
+         return new ResponseEntity<>(new CustomErrorType(e.getMessage()), HttpStatus.CONFLICT);
       }
    }
 

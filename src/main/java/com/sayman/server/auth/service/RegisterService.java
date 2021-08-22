@@ -20,10 +20,17 @@ public class RegisterService {
     public UserDto createNewUser(UserDto newUser) {
         Optional<User> foundUser = userRepository.findByUsername(newUser.getUsername());
 
-        foundUser.ifPresent((found) -> {
+        if (foundUser.isPresent()) {
             throw new UnsupportedOperationException(String.format("A user with %s username already exists",
-                    found.getUsername()));
-        });
+                    foundUser.get().getUsername()));
+        }
+
+        Optional<User> foundUserByEmail = userRepository.findByEmail(newUser.getEmail());
+
+        if (foundUserByEmail.isPresent()) {
+            throw new UnsupportedOperationException(String.format("A user with %s email address already exists",
+                    foundUserByEmail.get().getEmail()));
+        }
 
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         User savedUser = userRepository.save(newUser.convertToUser());
