@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ public class UserDto {
     private ApplicationUserRole role;
 
     @NotNull(message = "Password cannot be empty")
-    @Min(value = 8, message = "Password must be at least 8 characters long")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
     @NotNull(message = "Email cannot be empty")
