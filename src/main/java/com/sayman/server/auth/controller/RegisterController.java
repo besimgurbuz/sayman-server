@@ -2,7 +2,7 @@ package com.sayman.server.auth.controller;
 
 import com.sayman.server.auth.model.UserDto;
 import com.sayman.server.auth.service.RegisterService;
-import com.sayman.server.util.CustomErrorType;
+import com.sayman.server.util.HttpErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class RegisterController {
          UserDto newUser = registerService.createNewUser(userDto);
          return new ResponseEntity<>(newUser, HttpStatus.CREATED);
       } catch (UnsupportedOperationException e) {
-         return new ResponseEntity<>(new CustomErrorType(e.getMessage()), HttpStatus.CONFLICT);
+         return new ResponseEntity<>(new HttpErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
       }
    }
 

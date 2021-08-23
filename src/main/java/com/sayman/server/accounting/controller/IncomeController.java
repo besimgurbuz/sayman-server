@@ -6,7 +6,7 @@ import com.sayman.server.accounting.exceptions.AccountingException;
 import com.sayman.server.accounting.exceptions.NotFoundAccountItemException;
 import com.sayman.server.accounting.exceptions.UnacceptableExpectedDateRangeException;
 import com.sayman.server.accounting.service.IncomeService;
-import com.sayman.server.util.CustomErrorType;
+import com.sayman.server.util.HttpErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +43,7 @@ public class IncomeController {
             IncomeResponse incomeResponse = incomeService.getIncomeById(activeUsername, id);
             return new ResponseEntity<>(incomeResponse, HttpStatus.FOUND);
         } catch (NotFoundAccountItemException ex) {
-            return new ResponseEntity<CustomErrorType>( new CustomErrorType("Income not found with the id " + id),
+            return new ResponseEntity<>( new HttpErrorResponse("Income not found with the id " + id),
                     HttpStatus.valueOf(400));
         }
     }
@@ -65,7 +65,7 @@ public class IncomeController {
                 status = HttpStatus.BAD_REQUEST;
             }
 
-            return new ResponseEntity<>(new CustomErrorType(e.getMessage()), Objects.requireNonNull(status));
+            return new ResponseEntity<>(new HttpErrorResponse(e.getMessage()), Objects.requireNonNull(status));
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -77,7 +77,7 @@ public class IncomeController {
         try {
             incomeService.deleteIncomeById(activeUsername, id);
         } catch (NotFoundAccountItemException e) {
-            return new ResponseEntity<>(new CustomErrorType(e.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new HttpErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -91,15 +91,15 @@ public class IncomeController {
         } catch (UsernameNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } catch (UnacceptableExpectedDateRangeException e) {
-            return new ResponseEntity<>(new CustomErrorType(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new HttpErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<CustomErrorType> handleMethodArgumentMismatchExceptions(MethodArgumentTypeMismatchException exception) {
+    public ResponseEntity<HttpErrorResponse> handleMethodArgumentMismatchExceptions(MethodArgumentTypeMismatchException exception) {
         return new ResponseEntity<>(
-                new CustomErrorType(String.format("%s field cannot be %s", exception.getName(), exception.getValue())), HttpStatus.BAD_REQUEST);
+                new HttpErrorResponse(String.format("%s field cannot be %s", exception.getName(), exception.getValue())), HttpStatus.BAD_REQUEST);
     }
 }
